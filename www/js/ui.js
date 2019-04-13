@@ -63,7 +63,8 @@
         }
     }
         function reloadStream() {
-        document.getElementById("cam_feed").load();
+        var img = document.getElementById("cam_feed");
+        img.src="http://frcvision.local:1181/stream.mjpg";
         }
 
         function onRobotConnection(connected) {

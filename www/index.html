@@ -39,7 +39,9 @@
 			</ul>
 		</div>
 	</nav>
-
+<div class = "video-wrapper">
+		<img id = "cam_feed" class = "video_flip" src = "http://frcvision.local:1181/stream.mjpg"></img>
+	</div>
 	<div class = "checkBox">
 		Program Running: <span id="connectstate">Unknown state</span><div class = "network-box"></div><br/>
 		Robot: <span id="robotstate">Unknown state</span> <div class = "robot-box"></div><br/>
@@ -55,12 +57,10 @@
 				<!-- This gets populated by JS -->
 			</select>
 			<button onclick=reloadAutos()>Reload Autos</button>
-			<button id="cam_feed" onclick=reloadStream>Reload Stream</button>
+			<button onclick=reloadStream()>Reload Stream</button>
 		</div>
 	</div>
-	<div class = "video-wrapper">
-		<img class = "video_flip" src = "http://10.18.6.2:5806/stream.mjpg"></img>
-	</div>
+	
 	<!--<iframe class = "video_flip" src = "http://10.18.6.2:5806/stream.mjpg"></iframe> -->
 	<table id="nt" border=1>
 		<tbody></tbody>

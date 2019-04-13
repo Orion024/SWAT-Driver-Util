@@ -35,8 +35,7 @@
 }
 
 img {
-  position: absolute;
-
+  float: right;
 }
 .robot{
   z-index:100;
