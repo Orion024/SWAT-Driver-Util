@@ -1,6 +1,6 @@
 
 	"use strict";
-    
+
         function sortTable() {
       var table, rows, switching, i, x, y, shouldSwitch;
       table = document.getElementById("nt");
@@ -35,11 +35,11 @@
         }
       }
     }
-    
+
     let ui = {
         autoSelect: document.getElementById("auto-select")
     };
-    
+
         $(document).ready(function(){
             // sets a function that will be called when the websocket connects/disconnects
             NetworkTables.addWsConnectionListener(onNetworkTablesConnection, true);
@@ -48,9 +48,28 @@
             // sets a function that will be called when any NetworkTables key/value changes
             NetworkTables.addGlobalListener(onValueChanged, true);
         });
+		function reloadAutos() {
+		// Load list of prewritten autonomous modes
+        var autos = NetworkTables.getValue('/SmartDashboard/auto_options', []);
+        // Clear previous list
+        while (ui.autoSelect.firstChild) {
+                ui.autoSelect.removeChild(ui.autoSelect.firstChild);
+        }
+        // Make an option for each autonomous mode and put it in the selector
+        for (let i = 0; i < autos.length; i++) {
+                var option = document.createElement('option');
+                option.appendChild(document.createTextNode(autos[i]));
+                ui.autoSelect.appendChild(option);
+        }
+    }
+        function reloadStream() {
+        document.getElementById("cam_feed").load();
+        }
+
         function onRobotConnection(connected) {
             if(connected){
                 $('#robotAddress').text(NetworkTables.getRobotAddress());
+                $(".autoCheck").text(NetworkTables)
                 $(".robot-box").css("background-color", "green");
                 $(".ip-box").css("background-color", "green");
                 $('#robotstate').text("Connected!");
@@ -60,7 +79,7 @@
                 $('#robotstate').text("DISABLED AAHHAAHFHASDHFDAHFDHASHF!");
                 $('#robotAddress').text("Darn! There is no robot! Oh my! 404 Robot not found! oops!");
             }
-    
+
         }
         function onNetworkTablesConnection(connected) {
             if (connected) {
@@ -80,7 +99,7 @@
         }
         // Set value to the already-selected mode. If there is none, nothing will happen.
         ui.autoSelect.value = NetworkTables.getValue('/SmartDashboard/selected_auto_mode');});
-    
+
     // Load list of prewritten autonomous modes
     NetworkTables.addKeyListener('/SmartDashboard/autonomous/selected', (key, value) => {
         ui.autoSelect.value = value;
@@ -93,16 +112,16 @@
                 $(".ip-box").css("background-color", "red");
                 $(".network-box").css("background-color", "red");
             }
-            
+
         }
         function onValueChanged(key, value, isNew) {
             //Here we will put things that will always be changed in the webpage
             var angleOfRobot = 90 + -Number(NetworkTables.getValue("/getYaw"));
-    
+
             var pixelX = NetworkTables.getValue("/robotX") * 900;
             pixelX = pixelX / 8.12;
             pixelX = 450 + pixelX;
-    
+
             var pixelY = Number(NetworkTables.getValue("/robotY")) * 469;
             pixelY = pixelY /16.4592;
             pixelY = 5 + pixelY
@@ -114,16 +133,16 @@
             $(document).on('change', '#auto-select', function(e) {
                 if(NetworkTables.getValue("/SmartDashboard/selected_auto_mode") == this.options[e.target.selectedIndex].text )  {
                   //  console.log("gucci" + "  " +NetworkTables.getValue("/SmartDashboard/selected_auto_mode").value + " "+this.options[e.target.selectedIndex].text);
-                    
-                }   
-//                console.log("nop" + "  " +NetworkTables.getValue("/SmartDashboard/selected_auto_mode")+ " "+this.options[e.target.selectedIndex].text);                
+
+                }
+//                console.log("nop" + "  " +NetworkTables.getValue("/SmartDashboard/selected_auto_mode")+ " "+this.options[e.target.selectedIndex].text);
             });
             // key thing here: we're using the various NetworkTable keys as
             // the id of the elements that we're appending, for simplicity. However,
             // the key names aren't always valid HTML identifiers, so we use
             // the NetworkTables.keyToId() function to convert them appropriately
             if (isNew) {
-                
+
                 var tr = $('<tr></tr>').appendTo($('#nt > tbody:last'));
                 $('<td></td>').text(key).appendTo(tr);
                 $('<td></td>').attr('id', NetworkTables.keyToId(key))
@@ -149,13 +168,13 @@
         }
         // Set value to the already-selected mode. If there is none, nothing will happen.
         ui.autoSelect.value = NetworkTables.getValue('/SmartDashboard/selected_auto_mode');});
-    
-    
+
+
     // Update NetworkTables when autonomous selector is changed
     ui.autoSelect.onchange = function() {
         NetworkTables.putValue('/SmartDashboard/selected_auto_mode', this.value);
     };
-    
+
 
         function sendCmd(cmd) {
             $.ajax({

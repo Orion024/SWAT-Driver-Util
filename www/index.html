@@ -20,43 +20,48 @@
 <!-- <script src="/networktables/utils.js"></script> -->
 <div class = "container">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
-  <a href = "index.html" class="main-logo">S.W.A.T.</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+		<a href = "index.html" class="main-logo">S.W.A.T.</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="cheesy_path/index.html">Field Map</a>
-			</li>
-			<li class="nav-item">
-        <a class="nav-link" href="graph.html">Graph Visualizer</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="cheesy_path/index.html">Field Map</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="graph.html">Graph Visualizer</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
 
 	<div class = "checkBox">
 		Program Running: <span id="connectstate">Unknown state</span><div class = "network-box"></div><br/>
 		Robot: <span id="robotstate">Unknown state</span> <div class = "robot-box"></div><br/>
 		IP: <span id="robotAddress">disconnected</span><div class = "ip-box"></div> <br/>
-		AutoMode: <span id="autoCheck">boi what</span><div class = "ip-box auto-check"></div> <br/>		
+		AutoMode: <span id="autoCheck">boi what</span><div class = "ip-box auto-check"></div> <br/>
 		Current Auto being Ran: <span id = "selectAuto">there is none you probably jacked up chris</span>
 		<!-- <button onclick=sendCmd("/start-jar")>Start JAR</button>
 		<button onclick=sendCmd("/restart-jar")>Restart JAR</button> -->
-		<button onclick=sortTable()>Sort</button>		
+		<button onclick=sortTable()>Sort</button>
 		<div class="select-container">
 			<select id="auto-select">
-					<option>No auto modes found</option>
-					<!-- This gets populated by JS -->
+				<option>No auto modes found</option>
+				<!-- This gets populated by JS -->
 			</select>
+			<button onclick=reloadAutos()>Reload Autos</button>
+			<button id="cam_feed" onclick=reloadStream>Reload Stream</button>
+		</div>
 	</div>
+	<div class = "video-wrapper">
+		<img class = "video_flip" src = "http://10.18.6.2:5806/stream.mjpg"></img>
 	</div>
-	
+	<!--<iframe class = "video_flip" src = "http://10.18.6.2:5806/stream.mjpg"></iframe> -->
 	<table id="nt" border=1>
 		<tbody></tbody>
 	</table>
